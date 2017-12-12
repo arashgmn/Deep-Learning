@@ -8,7 +8,7 @@
 
 double ActPrime(double z){
     //sigmoid
-    return 2/(2+exp(-z)+exp(z));
+    return 1/(2+exp(-z)+exp(z));
 
     //tanh
     //return (1-tanh(z)*tanh(z));

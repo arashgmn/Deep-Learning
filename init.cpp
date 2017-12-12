@@ -15,12 +15,12 @@
 
 using namespace std;
 
-void Init(std::vector<double> &X, unsigned const seed) {
+void Init(std::vector<double> &X) {
 
     double sum2W,sum2Omega,sum2C;     //store norm2
 
     // for generating random numbers
-    std::default_random_engine generator(seed);
+    std::mt19937 generator(time(NULL)*M_PI);
     std::normal_distribution<double> distW(0,1);        //W is a guassian with sigma of 1 on each component
     std::normal_distribution<double> distOmega(0,1);    //Omega is a gaussian with sigma of 1 ib each component
 

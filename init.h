@@ -6,6 +6,6 @@
 #define PROJ2_INITIALIZATION_H
 
 
-void Init(std::vector<double> &X, unsigned const seed);
+void Init(std::vector<double> &X);
 
 #endif //PROJ2_INITIALIZATION_H

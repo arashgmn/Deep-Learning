@@ -7,7 +7,7 @@
 
 double Act(double z){
     //sigmoid
-    return 2/(1+exp(-z))-1;
+    return 1/(1+exp(-z))-0.5;
 
     //tanh
     //return tanh(z);

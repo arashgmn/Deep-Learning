@@ -13,11 +13,11 @@
 using namespace std;
 
 
-void GenSet  (double **x, int *y, unsigned const seed){
+void GenSet  (double **x, int *y){
 
 
     // for generating random numbers
-    std::default_random_engine generator(seed);
+    std::mt19937 generator;
     std::normal_distribution<double> distribution(0.0, 1.0);
 
     double sum2;

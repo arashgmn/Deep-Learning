@@ -5,5 +5,5 @@
 #ifndef INIT_H
 #define INIT_H
 
-void GenSet  (double **x, int *y, unsigned const seed);
+void GenSet  (double **x, int *y);
 #endif //INIT_H

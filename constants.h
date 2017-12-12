@@ -15,6 +15,7 @@ extern const double C;
 extern const double tol;
 extern const double alpha;
 extern const double gamma;
+/*
 extern const unsigned seed;
-extern std::default_random_engine generator;
+extern std::default_random_engine generator;*/
 #endif //PROJ2_CONSTANTS_H

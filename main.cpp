@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <fstream>
 
 #include "constants.h"
 #include "GenSet.h"
@@ -15,44 +16,61 @@
 #include "DeleteMatrix.h"
 #include "Accuracy.h"
 #include "GD.h"
+#include "WriteFunction.h"
+#include "ScalarProduct.h"
 
-
-const int p=14;
-const int d=14;
+const int p=1000;
+const int d=100;
 const int Nh=20;
 const double C=0;
 const double tol=0.005;
 const double alpha=.01;
-const double gamma=20*sqrt(d/2);
-
-
+const double gamma=5*sqrt(d/2);
+/*const unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();;
+std::default_random_engine generator(seed);
+*/
 
 using namespace std;
 
 int main(){
+
+    //unsigned seed =1;//time(NULL);//std::chrono::system_clock::now().time_since_epoch().count();
+    //std::default_random_engine generator;
+    //std::default_random_engine generator(time(NULL));
+
     clock_t start,finish;
     start=  clock();
 
-    unsigned const seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-
-
+    int K=10;
     vector <double> X(Nh*(d+2),0);
-    double **x;
+    vector <double> BIGX(Nh*(d+2)*K,0);
+    double **x, **spmat;
     auto *y=new int[p];
 
 
     //Generate data set
     x=AllocateMatrix(d,p);
-    GenSet(x,y,seed);
+    GenSet(x,y);
 
-    //Initialize
-    Init(X,seed);
+    fstream trained;
+    trained.open ("Trained Systems.txt",std::ios::app);
+    trained.setf(std::ios::showpos);
+    trained.setf(std::ios::scientific);
+    trained.precision(6);
 
-    //Training
-    GD (X ,x,y, alpha, tol);
+    for(int k=0;k<K;k++){
 
-    cout<<"Accuracy is: "<<Accuracy(X,x,y)<<"%\n";
+        //unsigned seed = time(NULL)*generator;//std::chrono::system_clock::now().time_since_epoch().count()
+        //Initialize
+        Init(X);
+        //Training
+        GD (X ,x,y, alpha, tol);
+        cout<<"Accuracy is: "<<Accuracy(X,x,y)<<"%\n";
+        WriteFunction(X,trained,BIGX,k);
+    }
+
+    spmat=ScalarProduct(BIGX,K);
+
 /*
     //Variables that store optimum for all runs
     double **W_GD,**W_SG,**C_SG,**C_GD;
@@ -102,6 +120,7 @@ int main(){
 
     }
 */
+    trained.close();
     DeleteMatrix(x,d);
     //cout<<"after delete";
     finish=  clock();
